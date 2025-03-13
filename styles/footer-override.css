@@ -1,0 +1,45 @@
+.footer {
+  padding: 60px 0 40px !important;
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+.footer .copyright-section {
+  padding: 20px 0 !important;
+  margin-top: 50px !important;
+}
+
+.footer .copyright-text {
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+  margin-bottom: 10px !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.footer .icp-text {
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.footer .border-t {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.footer .grid {
+  gap: 2rem !important;
+}
+
+.footer .space-y-4 > :not([hidden]) ~ :not([hidden]) {
+  margin-top: 1.5rem !important;
+}
+
+.footer .text-gray-600,
+.footer .dark\:text-gray-400 {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.footer a:hover {
+  color: #60a5fa !important;
+  opacity: 1 !important;
+}

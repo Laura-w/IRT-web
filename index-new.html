@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>随机化与药物供应链管理系统 - 专业临床试验解决方案</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="styles/layui.css" rel="stylesheet">
+    <link href="styles/index.css" rel="stylesheet">
+    <script>
+        // 配置 Tailwind 主题
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#004AF0',
+                        secondary: '#FF4081',
+                        light: '#F9FAFB',
+                        dark: '#111827'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'soft': '0 2px 10px rgba(0, 0, 0, 0.05)',
+                        'medium': '0 4px 20px rgba(0, 0, 0, 0.1)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+        }
+        .hover-scale {
+            @apply transition-transform duration-300 hover:scale-105;
+        }
+        .card {
+            @apply bg-white dark:bg-gray-800 rounded-xl shadow-soft dark:shadow-none border border-gray-100 dark:border-gray-700 transition-all duration-300;
+        }
+        .card:hover {
+            @apply shadow-medium border-primary/30 dark:border-primary/30;
+        }
+        .timeline-item {
+            @apply relative pl-8 pb-8 border-l border-gray-200 dark:border-gray-700;
+        }
+        .timeline-item::before {
+            content: '';
+            @apply absolute w-3 h-3 rounded-full bg-primary left-[-6px] top-1;
+        }
+        .timeline-item:last-child {
+            @apply border-l-0 pb-0;
+        }
+        .btn-primary {
+            @apply px-6 py-3 bg-primary text-white rounded-lg hover-scale hover:bg-primary/90 transition-colors;
+        }
+        .btn-secondary {
+            @apply px-6 py-3 bg-white dark:bg-gray-800 text-primary dark:text-white border border-gray-200 dark:border-gray-700 rounded-lg hover-scale transition-colors;
+        }
+        .nav-link {
+            @apply text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-white transition-colors;
+        }
+        .tab-btn {
+            @apply relative text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary border-b-2 border-transparent hover:border-primary dark:hover:border-primary px-8 py-3 font-medium transition-all duration-300;
+        }
+        .tab-btn::after {
+            content: '';
+            @apply absolute bottom-0 left-0 w-full h-0.5 bg-primary transform scale-x-0 transition-transform duration-300;
+        }
+        .tab-btn:hover::after {
+            @apply scale-x-100;
+        }
+        .tab-btn.active {
+            @apply text-primary dark:text-primary border-primary;
+        }
+        .tab-btn.active::after {
+            @apply scale-x-100;
+        }
+        /* 页脚样式 */
+        .wapfoot {
+            background: #000;
+            padding-top: 6px;
+            color: #fff;
+            position: relative;
+        }
+        .dark .wapfoot {
+            background: #111827;
+            color: #f3f4f6;
+        }
+        .wapfoot a {
+            color: #fff;
+            transition: color 0.3s ease;
+        }
+        .dark .wapfoot a {
+            color: #f3f4f6;
+        }
+        .dark .wapfoot a:hover {
+            color: #60a5fa;
+        }
+        .w1350 {
+            width: 100%;
+            max-width: 1350px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        .wapfootlogo {
+            display: block;
+            padding-top: 45px;
+        }
+        .wapfootlogo img {
+            height: 50px;
+            opacity: 1;
+            transition: filter 0.3s ease;
+        }
+        .dark .wapfootlogo img {
+            filter: brightness(1);
+        }
+        .phoneam {
+            padding-top: 25px;
+            margin-top: 25px;
+            padding-bottom: 25px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-left: none;
+            border-right: none;
+            transition: border-color 0.3s ease;
+        }
+        .dark .phoneam {
+            border-color: rgba(243,244,246,0.2);
+        }
+        .phone-a {
+            margin-top: 8px;
+            display: block;
+            position: relative;
+            height: 24px;
+            line-height: 24px;
+            padding-left: 30px;
+            opacity: 0.9;
+        }
+        .dark .phone-a {
+            opacity: 0.85;
+        }
+        .phone-a:hover {
+            opacity: 1;
+        }
+        .phone-a:nth-child(1) {
+            margin-top: 0;
+        }
+        .phone-a i {
+            left: 0;
+            top: 0;
+            width: 24px;
+            position: absolute;
+            display: block;
+            height: 100%;
+        }
+        .phone-a .i1 {
+            background: url(参考网页2/药物供应链管理-产品与解决方案_files/1654654904285197.svg) left center no-repeat;
+            background-size: 20px auto;
+        }
+        .phone-a .i2 {
+            background: url(参考网页2/药物供应链管理-产品与解决方案_files/1654654906719787.svg) left center no-repeat;
+            background-size: 20px auto;
+        }
+        .phone-a .i3 {
+            background: url(参考网页2/药物供应链管理-产品与解决方案_files/xlr.svg) left center no-repeat;
+            background-size: 20px auto;
+        }
+        .wapfootp1 {
+            padding-top: 20px;
+        }
+        .wapfootp1 a {
+            display: inline-block;
+            margin-right: 5px;
+            opacity: 0.9;
+        }
+        .wapfootp2 {
+            font-size: 12px;
+            opacity: 0.6;
+            margin-top: 10px;
+            padding-bottom: 20px;
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="styles/footer-override.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans transition-colors duration-300">
+    <!-- 导航栏 -->
+    <nav class="fixed w-full bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm z-50 border-b border-gray-200 dark:border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center space-x-4">
+                    <img src="images/logo-l.png" alt="Logo" class="h-8 w-auto dark:hidden">
+                    <img src="images/logo-b1.png" alt="Logo" class="h-8 w-auto hidden dark:block">
+                    <span class="text-xl font-bold text-black dark:text-white">OptiChain</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="#overview" class="nav-link">产品与解决方案</a>
+                    <a href="#contact" class="nav-link">关于我们</a>
+                    <button id="themeToggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:block text-white"></i>
+                    </button>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="mobileMenuBtn" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- 移动端菜单 -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+            <div class="px-4 py-3 space-y-3">
+                <a href="#overview" class="block nav-link py-2">产品与解决方案</a>
+                <a href="#contact" class="block nav-link py-2">关于我们</a>
+                <button id="mobileThemeToggle" class="w-full text-left nav-link py-2">
+                    <i class="fas fa-moon mr-2 dark:hidden"></i>
+                    <i class="fas fa-sun mr-2 hidden dark:block"></i>
+                    <span class="dark:hidden">切换到深色模式</span>
+                    <span class="hidden dark:block">切换到浅色模式</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 头部横幅 -->
+    <header class="pt-24 pb-16 px-4 bg-gradient-to-r from-primary/5 to-secondary/5 dark:from-primary/10 dark:to-secondary/10">
+        <div class="max-w-5xl mx-auto text-center">
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-primary dark:text-white mb-4">随机化与药物供应链管理系统</h1>
+            <h2 class="text-xl md:text-2xl lg:text-3xl font-semibold text-gray-700 dark:text-gray-300 mb-6">专业临床试验解决方案</h2>
+            <p class="text-lg text-gray-600 dark:text-gray-400 mb-8">提供高效、安全、可靠的临床试验随机化与药物供应链管理服务</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#scm" class="btn-primary">
+                    了解更多
+                </a>
+                <a href="#contact" class="btn-secondary">
+                    申请试用
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要内容区域 -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Tab导航 -->
+        <div class="mb-8">
+            <div class="flex flex-wrap justify-center space-x-4">
+                <button class="tab-btn active" data-tab="overview">
+                    产品解决方案
+                </button>
+                <button class="tab-btn" data-tab="iwrs">
+                    随机化系统
+                </button>
+                <button class="tab-btn" data-tab="scm">
+                    供应链管理
+                </button>
+            </div>
+        </div>
+
+        <!-- Tab内容区域 -->
+        <div class="tab-content" id="overview">
+            <!-- 产品特点 -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div class="card p-6">
+                    <div class="text-primary dark:text-primary mb-4">
+                        <i class="fas fa-random text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">一体化解决方案</h3>
+                    <p class="text-gray-600 dark:text-gray-400">集成随机化系统(IWRS)与药物供应链管理，提供临床试验全流程支持。</p>
+                </div>
+                <div class="card p-6">
+                    <div class="text-primary dark:text-primary mb-4">
+                        <i class="fas fa-shield-alt text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">安全合规</h3>
+                    <p class="text-gray-600 dark:text-gray-400">符合GCP、21 CFR Part 11等法规要求，确保数据安全与隐私保护。</p>
+                </div>
+                <div class="card p-6">
+                    <div class="text-primary dark:text-primary mb-4">
+                        <i class="fas fa-chart-line text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">高效管理</h3>
+                    <p class="text-gray-600 dark:text-gray-400">优化临床试验流程，减少人为错误，提高试验效率与数据质量。</p>
+                </div>
+            </div>
+            <div class="mt-8 p-6 card">
+                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    我们的随机化与药物供应链管理系统是专为临床研究设计的综合性解决方案，通过先进的技术手段实现受试者随机分配、药物管理、库存追踪等核心功能。系统支持多中心、多地区临床研究，适用于I-IV期各类临床研究，能够有效降低试验运营成本，加速新药研发进程。
+                </p>
+            </div>
+        </div>
+
+        <div class="tab-content hidden" id="iwrs">
+            <!-- 随机化系统内容 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">系统特点</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-primary mt-1 mr-2"></i>
+                            <span class="text-gray-700 dark:text-gray-300">支持多种随机化方法（简单随机、区组随机、分层随机等）</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-primary mt-1 mr-2"></i>
+                            <span class="text-gray-700 dark:text-gray-300">动态随机分配算法，确保各组间平衡</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-primary mt-1 mr-2"></i>
+                            <span class="text-gray-700 dark:text-gray-300">盲法管理（单盲、双盲、开放标签）</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-primary mt-1 mr-2"></i>
+                            <span class="text-gray-700 dark:text-gray-300">紧急揭盲功能与审计追踪</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card p-6">
+                    <h3 class="text-xl font-semibold mb-4">业务流程</h3>
+                    <div class="space-y-4">
+                        <div class="timeline-item">
+                            <h4 class="font-medium">受试者筛选</h4>
+                            <p class="text-gray-600 dark:text-gray-400">录入基本信息，确认入组条件</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4 class="font-medium">随机分配</h4>
+                            <p class="text-gray-600 dark:text-gray-400">根据设定的随机化方案自动分配治疗组别</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4 class="font-medium">访视管理</h4>
+                            <p class="text-gray-600 dark:text-gray-400">安排随访计划，记录访视数据</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4 class="font-medium">数据导出</h4>
+                            <p class="text-gray-600 dark:text-gray-400">生成标准格式的数据报告</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content hidden" id="scm">
+            <!-- 供应链管理内容 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">系统功能</h3>
+                    <div class="space-y-4">
+                        <div class="card p-4">
+                            <h4 class="font-medium mb-2">仓储管理</h4>
+                            <p class="text-gray-600 dark:text-gray-400">- 多仓库管理与温控监测<br>- 效期管理与批次追踪<br>- 库存盘点与调拨管理</p>
+                        </div>
+                        <div class="card p-4">
+                            <h4 class="font-medium mb-2">物流配送</h4>
+                            <p class="text-gray-600 dark:text-gray-400">- 运输条件监控<br>- 配送路线优化<br>- 物流轨迹追踪</p>
+                        </div>
+                        <div class="card p-4">
+                            <h4 class="font-medium mb-2">供应商管理</h4>
+                            <p class="text-gray-600 dark:text-gray-400">- 供应商资质审核<br>- 绩效评估<br>- 协议管理</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">业务流程</h3>
+                    <div class="space-y-4">
+                        <div class="timeline-item">
+                            <h4 class="font-medium">入库管理</h4>
+                            <p class="text-gray-600 dark:text-gray-400">药物验收、质检、入库登记</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4 class="font-medium">库存管理</h4>
+                            <p class="text-gray-600 dark:text-gray-400">实时库存监控、库存预警、补货计划</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4 class="font-medium">出库配送</h4>
+                            <p class="text-gray-600 dark:text-gray-400">订单处理、拣货、配送管理</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4 class="font-medium">退货处理</h4>
+                            <p class="text-gray-600 dark:text-gray-400">退货原因分析、质量追溯、处理方案</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="space-y-4">
+                    <img src="images/logo-l.png" alt="Logo" class="h-8 w-auto dark:hidden">
+                    <img src="images/logo-b1.png" alt="Logo" class="h-8 w-auto hidden dark:block">
+                    <p class="text-gray-600 dark:text-gray-400">为医药供应链提供智能解决方案</p>
+                    <p class="text-gray-600 dark:text-gray-400">为试验提供高效的随机化服务</p>
+                </div>
+                <!-- 联系信息 -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">联系我们</h3>
+                    <div class="space-y-3">
+                        <a href="mailto:contact@example.com" class="flex items-center text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary">
+                            <i class="fas fa-envelope mr-3"></i>
+                            <span>contact@example.com</span>
+                        </a>
+                        <a href="tel:021-XXXXXXXX" class="flex items-center text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary">
+                            <i class="fas fa-phone mr-3"></i>
+                            <span>021-XXXXXXXX</span>
+                        </a>
+                        <p class="flex items-center text-gray-600 dark:text-gray-400">
+                            <i class="fas fa-map-marker-alt mr-3"></i>
+                            <span>上海市浦东新区xxx路xxx号</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 快速链接 -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100">快速链接</h3>
+                    <div class="grid grid-cols-2 gap-2">
+                        <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary">关于我们</a>
+                        <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary">产品服务</a>
+                        <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary">解决方案</a>
+                        <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary">技术支持</a>
+                        <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary">隐私政策</a>
+                        <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary">使用条款</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 版权信息 -->
+            <div class="border-t border-gray-200 dark:border-gray-700 mt-8">
+                <div class="copyright-section py-6 text-center text-gray-600 dark:text-gray-400">
+                    <p class="copyright-text mb-3">&copy; 2024 上海xxxxx科技有限公司 版权所有</p>
+                    <p class="icp-text opacity-80">沪ICP备XXXXXXXX号-1</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .tab-btn {
+            @apply relative text-gray-600 dark:text-gray-400 hover:text-primary dark:hover:text-primary border-b-2 border-transparent hover:border-primary dark:hover:border-primary px-8 py-3 font-medium transition-all duration-300;
+        }
+        .tab-btn::after {
+            content: '';
+            @apply absolute bottom-0 left-0 w-full h-0.5 bg-primary transform scale-x-0 transition-transform duration-300;
+        }
+        .tab-btn:hover::after {
+            @apply scale-x-100;
+        }
+        .tab-btn.active {
+            @apply text-primary dark:text-primary border-primary;
+        }
+        .tab-btn.active::after {
+            @apply scale-x-100;
+        }
+    </style>
+
+    <script>
+        // 主题切换
+        const themeToggle = document.getElementById('themeToggle');
+        const mobileThemeToggle = document.getElementById('mobileThemeToggle');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        // Tab切换逻辑
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.dataset.tab;
+                
+                // 更新按钮状态
+                tabBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // 更新内容显示
+                tabContents.forEach(content => {
+                    if (content.id === tabId) {
+                        content.classList.remove('hidden');
+                    } else {
+                        content.classList.add('hidden');
+                    }
+                });
+            });
+        });
+
+        // 移动端菜单切换
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        function updateTheme() {
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        }
+
+        themeToggle.addEventListener('click', () => {
+            if (document.documentElement.classList.contains('dark')) {
+                localStorage.theme = 'light';
+            } else {
+                localStorage.theme = 'dark';
+            }
+            updateTheme();
+        });
+
+        mobileThemeToggle.addEventListener('click', () => {
+            if (document.documentElement.classList.contains('dark')) {
+                localStorage.theme = 'light';
+            } else {
+                localStorage.theme = 'dark';
+            }
+            updateTheme();
+        });
+
+        updateTheme();
+    </script>

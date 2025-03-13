@@ -1,0 +1,19 @@
+@charset "utf-8";
+@font-face {font-family:"OpenSans-Bold";src:url("../font/OpenSans-Bold.eot") format("eot"),url("../font/OpenSans-Bold.woff") format("woff"),url("../font/OpenSans-Bold.ttf") format("truetype"),url("../font/OpenSans-Bold.svg") format("svg");font-weight:normal;font-style:normal;}
+@font-face {font-family:"OpenSans-Semibold";src:url("../font/OpenSans-Semibold.eot") format("eot"),url("../font/OpenSans-Semibold.woff") format("woff"),url("../font/OpenSans-Semibold.ttf") format("truetype"),url("../font/OpenSans-Semibold.svg") format("svg");font-weight:normal;font-style:normal;}
+@font-face {font-family:"OpenSans-Regular";src:url("../font/OpenSans-Regular.eot") format("eot"),url("../font/OpenSans-Regular.woff") format("woff"),url("../font/OpenSans-Regular.ttf") format("truetype"),url("../font/OpenSans-Regular.svg") format("svg");font-weight:normal;font-style:normal;}
+@font-face {font-family:"OpenSans-Light";src:url("../font/OpenSans-Light.eot") format("eot"),url("../font/OpenSans-Light.woff") format("woff"),url("../font/OpenSans-Light.ttf") format("truetype"),url("../font/OpenSans-Light.svg") format("svg");font-weight:normal;font-style:normal;}
+
+@font-face {font-family:"DINCondensedBold";src:url("../font/DINCondensedBold.ttf") format("truetype");font-weight:normal;font-style:normal;}
+
+@font-face {font-family:"GilroyBold";src:url("../font/gilroy-bold-4.otf") format("truetype");}
+@font-face {font-family:"Gilroy";src:url("../font/Gilroy-Light-11.otf") format("truetype");}
+
+@font-face{font-family:'Helvetica Neue LT W05_47 Lt Cn';src:url(../fonts/5663704/083e1179-98b4-4cbd-a13a-50a7c78d6fea.woff2) format('woff2'),url(../fonts/5663704/239170e6-7f0d-4c35-97d4-490b362e4ef7.woff) format('woff');font-display:swap}
+@font-face{font-family:'Helvetica Neue LT W05_57 Cond';src:url(../fonts/5663732/9516ef74-4fe9-45fe-a09f-493cb9518f71.woff2) format('woff2'),url(../fonts/5663732/5b99bc59-1b2e-446b-961e-2e1dbdfcd641.woff) format('woff');font-display:swap}
+@font-face{font-family:'Helvetica Neue LT W05_67 Md Cn';src:url(../fonts/5663739/1a559dd9-e51e-45d5-86eb-f343223bacef.woff2) format('woff2'),url(../fonts/5663739/581fae27-b5f4-44ab-b5b1-92f11d4f9838.woff) format('woff');font-display:swap}
+
+.fmg{font-family:"Gilroy",aril;}
+.fmgb{font-family:"GilroyBold",aril;}
+.dinbold{font-family:"DINCondensedBold";}
+

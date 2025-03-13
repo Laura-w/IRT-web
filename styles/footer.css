@@ -1,0 +1,40 @@
+.footer {
+  padding: 80px 0 60px;
+  background-color: #333;
+  color: #fff;
+}
+
+.copyright-section {
+  padding: 20px 0;
+}
+
+.copyright-text {
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+
+.icp-text {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.footer .divider {
+  margin: 25px 0;
+  border-top: 1px solid #444;
+}
+
+.footer .links {
+  padding: 25px 0;
+}
+
+.footer .links a {
+  color: #979797;
+  font-size: 14px;
+  margin: 0 20px;
+  transition: color 0.3s;
+}
+
+.footer .links a:hover {
+  color: #fff;
+}
